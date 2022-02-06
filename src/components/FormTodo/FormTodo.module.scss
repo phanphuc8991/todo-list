@@ -1,0 +1,66 @@
+form {
+  font-size: 1.2rem;
+  .formInner {
+    margin: 1.5rem;
+    h3 {
+      margin: 10px 0 0 0;
+    }
+    input {
+      border: none;
+      outline: none;
+      font-size: 1.2rem;
+      width: 100%;
+      padding-bottom: 5px;
+      padding-left: 5px;
+    }
+    input:focus {
+      border-bottom: 1px solid #0080ff;
+    }
+
+    .inputDesTodo {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .chooseDateAndTime {
+      margin: 10px 0px 12px 10px;
+    }
+    .chooseDate {
+      margin-bottom: 10px;
+    }
+    .chooseProject {
+      margin-bottom: 15px;
+      ul {
+        margin: 10px 0 0 16px;
+        padding: 0;
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        li {
+          padding: 5px 10px;
+          border: 1px solid #0080ff;
+          border-radius: 3px;
+          margin-right: 5px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+    .generalFlex {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .addTodo {
+    border: none;
+    background-color: #0080ff;
+    width: 100%;
+    padding: 10px 0;
+    color: white;
+    font-weight: bold;
+  }
+  .addTodo:hover {
+    opacity: 0.9;
+    transition: all 300ms ease;
+    cursor: pointer;
+  }
+}
