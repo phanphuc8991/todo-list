@@ -1,9 +1,11 @@
+import { useState } from "react";
 import clsx from "clsx";
 import styles from "./Project.module.scss";
 import RenameProject from "../RenameProject";
 import { Pencil, XCircle } from "react-bootstrap-icons";
 
 function Project({ project, colorEdit }) {
+  const [showModal, setShowModal] = useState(false);
   return (
     <ul className={styles.project}>
       <li>
@@ -11,7 +13,12 @@ function Project({ project, colorEdit }) {
         <div className={styles.btns}>
           {colorEdit ? (
             <div className={styles.editDelete}>
-              <div className={styles.editProject}>
+              <div
+                className={styles.editProject}
+                onClick={() => {
+                  setShowModal(true);
+                }}
+              >
                 <Pencil size="10" />
               </div>
               <div className={styles.deleteProject}>
@@ -28,7 +35,11 @@ function Project({ project, colorEdit }) {
         </div>
       </li>
 
-      {/* <RenameProject /> */}
+      <RenameProject
+        showModal={showModal}
+        project={project}
+        setShowModal={setShowModal}
+      />
     </ul>
   );
 }

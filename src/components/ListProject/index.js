@@ -4,12 +4,14 @@ import styles from "./ListProject.module.scss";
 import Project from "../Project";
 import AddNewProject from "../AddNewProject";
 import { CaretUp, PencilFill, Palette } from "react-bootstrap-icons";
+
 function ListProject() {
   const projects = [
     { id: 1, name: "personal", numberOfTodos: 0 },
     { id: 2, name: "work", numberOfTodos: 2 },
     { id: 3, name: "other", numberOfTodos: 3 },
   ];
+
   const [showMenu, setShowMenu] = useState(true);
   const [colorEdit, setColorEdit] = useState(false);
   const newColorEdit = colorEdit ? "#1ec94c" : "#000000";

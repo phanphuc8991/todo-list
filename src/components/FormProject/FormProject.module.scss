@@ -1,0 +1,40 @@
+.formProject {
+  font-size: 1.2rem;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  transform: translate(-25%, -25%);
+  background-color: white;
+  width: 250px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  .header {
+    margin-left: 10px;
+    font-size: 1.3rem;
+  }
+  .inputProject {
+    margin-left: 10px;
+    input {
+      border: none;
+      border-bottom: 1px solid #0080ff;
+      padding-bottom: 6px;
+      margin-bottom: 15px;
+      outline: none;
+    }
+  }
+  .btns {
+    button {
+      border: none;
+      padding: 6px 0;
+      color: white;
+    }
+    button:nth-of-type(1) {
+      width: 50%;
+      background-color: #abadac;
+    }
+    button:nth-of-type(2) {
+      width: 50%;
+      background-color: #0080ff;
+    }
+  }
+}

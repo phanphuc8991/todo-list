@@ -1,5 +1,11 @@
 form {
   font-size: 1.2rem;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  background-color: white;
+  width: 350px;
   .formInner {
     margin: 1.5rem;
     h3 {
