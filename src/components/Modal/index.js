@@ -6,6 +6,7 @@ function Modal({ children, showModal, setShowModal }) {
   const refModal = useRef(null);
 
   function handleModal(e) {
+    console.log("e.target", e.target);
     if (e.target === refModal.current) {
       setShowModal(false);
     }

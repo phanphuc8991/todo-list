@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import styles from "./FormTodo.module.scss";
 import DateFnsUtils from "@date-io/date-fns";
+
 import {
   DatePicker,
   TimePicker,
@@ -11,9 +12,9 @@ function FormTodo({
   desTodo,
   setDesTodo,
   inputDate,
-  setInputDate,
+  handleDateChange,
   inputTime,
-  setInputTime,
+  handleTimeChange,
 }) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -41,18 +42,14 @@ function FormTodo({
                 <CalendarDay style={{ marginRight: "5px" }} />
                 <span>Choose a day</span>
               </div>
-              <DatePicker value={inputDate} onChange={setInputDate} />
+              <DatePicker value={inputDate} onChange={handleDateChange} />
             </div>
             <div className={styles.chooseTime}>
               <div className={clsx(styles.generalFlex)}>
                 <Clock style={{ marginRight: "5px" }} />
                 <span>Choose time</span>
               </div>
-              <TimePicker
-                style={{ marginRight: "5px" }}
-                value={inputTime}
-                onChange={setInputTime}
-              />
+              <TimePicker value={inputTime} onChange={handleTimeChange} />
             </div>
           </div>
           <div className={styles.chooseProject}>
@@ -69,7 +66,9 @@ function FormTodo({
           </div>
         </div>
 
-        <button className={styles.addTodo}>+ Add to do</button>
+        <button type="button" className={styles.addTodo}>
+          + Add to do
+        </button>
       </form>
     </MuiPickersUtilsProvider>
   );

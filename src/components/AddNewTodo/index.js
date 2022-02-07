@@ -10,7 +10,7 @@ function AddNewTodo() {
   const [desTodo, setDesTodo] = useState("");
   const [inputDate, setInputDate] = useState(new Date());
   const [inputTime, setInputTime] = useState(new Date());
-  function handleDateChange() {}
+  function handleDateChange(e) {}
   function handleTimeChange() {}
   return (
     <div className={styles.addNewTodo}>
@@ -28,9 +28,9 @@ function AddNewTodo() {
           desTodo={desTodo}
           setDesTodo={setDesTodo}
           inputDate={inputDate}
-          setInputDate={setInputDate}
+          handleDateChange={handleDateChange}
           inputTime={inputTime}
-          setInputTime={setInputTime}
+          handleTimeChange={handleTimeChange}
         />
       </Modal>
     </div>
