@@ -1,13 +1,10 @@
 .project {
-  margin: 0;
-  padding: 0;
-  margin-left: 11px;
-  list-style: none;
   li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 5px;
+    cursor: pointer;
     .btns {
       margin-right: 20px;
       .editDelete {

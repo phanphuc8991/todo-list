@@ -40,6 +40,10 @@
       padding: 0;
       margin-left: 11px;
       list-style: none;
+      li {
+        cursor: pointer;
+        padding-bottom: 5px;
+      }
     }
   }
 }

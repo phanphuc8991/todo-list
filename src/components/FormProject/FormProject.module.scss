@@ -1,16 +1,13 @@
 .formProject {
   font-size: 1.2rem;
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  transform: translate(-25%, -25%);
   background-color: white;
   width: 250px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   .header {
-    margin-left: 10px;
+    padding: 1rem;
     font-size: 1.3rem;
+    font-weight: bold;
   }
   .inputProject {
     margin-left: 10px;

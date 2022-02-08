@@ -10,7 +10,7 @@ function FormProject({
 }) {
   return (
     <div className={styles.formProject}>
-      <h3 className={styles.header}>{titleModal}</h3>
+      <div className={styles.header}>{titleModal}</div>
       <div className={styles.inputProject}>
         <input
           type="text"

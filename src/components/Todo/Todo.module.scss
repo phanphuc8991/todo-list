@@ -1,0 +1,41 @@
+.todo {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+
+  font-size: 1.2rem;
+  cursor: pointer;
+  .checkTodo {
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+    .checkedTodo {
+    }
+    .unCheckedTodo {
+    }
+  }
+  .desTodo {
+    flex: 1;
+    color: #000;
+    .nameTodo {
+      position: relative;
+      .line {
+        position: absolute;
+        border-bottom: 1px solid #ebebeb;
+        width: 100%;
+        top: 50%;
+      }
+    }
+  }
+  .desTodoCheckColor {
+    color: #ebebeb;
+  }
+  .addAndDeleteTodo {
+    display: flex;
+    align-items: center;
+    .addToNextToday {
+      margin-right: 8px;
+      margin-left: 5px;
+    }
+  }
+}

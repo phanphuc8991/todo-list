@@ -7,9 +7,6 @@ import FormProject from "../FormProject";
 function AddNewProject() {
   const [showModal, setShowModal] = useState(false);
   const [valueInput, setValueInput] = useState("");
-  console.log("render add new project");
-  console.log("showModal", showModal);
-
   return (
     <div>
       <div

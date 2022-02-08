@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import clsx from "clsx";
 import styles from "./Calendar.module.scss";
 import { CalendarDate, CaretUp } from "react-bootstrap-icons";
 import { calendarItems } from "../../constants";
+import { TodoContext } from "../GlobalContext";
+
 function Calendar() {
+  const { setSelectedProject } = useContext(TodoContext);
   return (
     <div className={styles.calendar}>
       <div className={styles.header}>
@@ -19,7 +23,14 @@ function Calendar() {
       <div className={styles.content}>
         <ul>
           {calendarItems.map((calendar) => (
-            <li key={calendar}>{calendar}</li>
+            <li
+              key={calendar}
+              onClick={() => {
+                setSelectedProject(calendar);
+              }}
+            >
+              {calendar}
+            </li>
           ))}
         </ul>
       </div>

@@ -7,20 +7,35 @@ import {
   TimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import { Bell, Palette, CalendarDay, Clock } from "react-bootstrap-icons";
+import { Bell, Palette, CalendarDay, Clock, X } from "react-bootstrap-icons";
 function FormTodo({
+  headingTodo,
   desTodo,
   setDesTodo,
   inputDate,
   handleDateChange,
   inputTime,
   handleTimeChange,
+  setShowModal,
+  showButton = false,
+  projects = [],
+  todoProject,
+  setTodoProject,
 }) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <form>
         <div className={styles.formInner}>
-          <h3>Add a new to do!</h3>
+          {showButton && (
+            <div
+              className={styles.exitModal}
+              onClick={() => setShowModal(false)}
+            >
+              <X size="20" />
+            </div>
+          )}
+
+          <div className={styles.headingTodo}>{headingTodo}</div>
           <div className={styles.inputDesTodo}>
             <input
               type="text"
@@ -59,16 +74,33 @@ function FormTodo({
             </div>
 
             <ul className="listProject">
-              <li>other</li>
-              <li>work</li>
-              <li>personal</li>
+              {projects.length > 0 ? (
+                projects.map((project) => (
+                  <li
+                    className={clsx({
+                      [styles.projectActive]: todoProject === project.name,
+                    })}
+                    onClick={() => {
+                      setTodoProject(project.name);
+                    }}
+                    key={project.id}
+                  >
+                    {project.name}
+                  </li>
+                ))
+              ) : (
+                <span style={{ color: "#ff0000" }}>
+                  Please add project before proceeding!
+                </span>
+              )}
             </ul>
           </div>
         </div>
-
-        <button type="button" className={styles.addTodo}>
-          + Add to do
-        </button>
+        {showButton && (
+          <button type="button" className={styles.addTodo}>
+            + Add to do
+          </button>
+        )}
       </form>
     </MuiPickersUtilsProvider>
   );

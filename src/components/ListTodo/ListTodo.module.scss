@@ -1,0 +1,20 @@
+.listTodo {
+  position: absolute;
+  width: 350px;
+  height: 80%;
+  left: 40px;
+  top: 107px;
+  background-color: white;
+  .selectedProject {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  .contentListTodo {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    margin: 1rem 2rem;
+  }
+}

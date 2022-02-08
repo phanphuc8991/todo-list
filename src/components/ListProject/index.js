@@ -40,11 +40,11 @@ function ListProject() {
           </span>
         </div>
       </div>
-      <div className={styles.content}>
+      <ul className={styles.content}>
         {projects.map((project) => (
           <Project key={project.id} colorEdit={colorEdit} project={project} />
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
