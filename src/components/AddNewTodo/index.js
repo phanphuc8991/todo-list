@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import clsx from "clsx";
 import styles from "./AddNewTodo.module.scss";
 import Modal from "../Modal";
@@ -11,19 +11,19 @@ function AddNewTodo() {
     { id: 3, name: "other", numberOfTodos: 3 },
   ];
   const { selectedProject } = useContext(TodoContext);
-  console.log("selectedProject", selectedProject);
   const [showModal, setShowModal] = useState(false);
   const [desTodo, setDesTodo] = useState("");
   const [inputDate, setInputDate] = useState(new Date());
   const [inputTime, setInputTime] = useState(new Date());
   const [todoProject, setTodoProject] = useState(selectedProject);
-  console.log("todoProject", todoProject);
+  useEffect(() => {
+    setTodoProject(selectedProject);
+  }, [selectedProject]);
   function handleDateChange(e) {}
   function handleTimeChange() {}
 
   return (
     <div className={styles.addNewTodo}>
-      {console.log("redder")}
       <div className={clsx(styles["addNewTodo__btnOutside"])}>
         <button
           onClick={() => {
@@ -47,6 +47,7 @@ function AddNewTodo() {
           projects={projects}
           todoProject={todoProject}
           setTodoProject={setTodoProject}
+          selectedProject={selectedProject}
         />
       </Modal>
     </div>

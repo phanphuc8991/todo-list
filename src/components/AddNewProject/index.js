@@ -4,6 +4,7 @@ import styles from "./AddNewProject.module.scss";
 import { Plus } from "react-bootstrap-icons";
 import Modal from "../Modal";
 import FormProject from "../FormProject";
+
 function AddNewProject() {
   const [showModal, setShowModal] = useState(false);
   const [valueInput, setValueInput] = useState("");

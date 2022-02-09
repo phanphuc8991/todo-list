@@ -6,12 +6,11 @@ import GlobalStyle from "./components/GlobalStyle";
 import GlobalContext from "./components/GlobalContext";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GlobalStyle>
-      <GlobalContext>
-        <App />
-      </GlobalContext>
-    </GlobalStyle>
-  </React.StrictMode>,
+  <GlobalStyle>
+    <GlobalContext>
+      <App />
+    </GlobalContext>
+  </GlobalStyle>,
+
   document.getElementById("root")
 );

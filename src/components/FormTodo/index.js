@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import clsx from "clsx";
 import styles from "./FormTodo.module.scss";
 import DateFnsUtils from "@date-io/date-fns";
@@ -21,7 +22,13 @@ function FormTodo({
   projects = [],
   todoProject,
   setTodoProject,
+  selectedProject,
 }) {
+  useEffect(() => {
+    if (selectedProject !== todoProject) {
+      setTodoProject(selectedProject);
+    }
+  }, []);
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <form>

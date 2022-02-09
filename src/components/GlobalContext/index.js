@@ -1,6 +1,10 @@
 import { useState, createContext } from "react";
+import { useTodos, useProjects } from "../../hooks";
 export const TodoContext = createContext();
+
 function GlobalContext({ children }) {
+  const todos = useTodos();
+  console.log("render");
   const [selectedProject, setSelectedProject] = useState("other");
   const selectedTodo = {
     selectedProject,
