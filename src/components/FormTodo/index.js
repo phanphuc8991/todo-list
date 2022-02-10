@@ -10,6 +10,7 @@ import {
 } from "@material-ui/pickers";
 import { Bell, Palette, CalendarDay, Clock, X } from "react-bootstrap-icons";
 function FormTodo({
+  handleSubmit,
   headingTodo,
   desTodo,
   setDesTodo,
@@ -20,18 +21,18 @@ function FormTodo({
   setShowModal,
   showButton = false,
   projects = [],
-  todoProject,
-  setTodoProject,
+  projectName,
+  setprojectName,
   selectedProject,
 }) {
   useEffect(() => {
-    if (selectedProject !== todoProject) {
-      setTodoProject(selectedProject);
+    if (selectedProject !== projectName) {
+      setprojectName(selectedProject);
     }
   }, []);
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={styles.formInner}>
           {showButton && (
             <div
@@ -85,10 +86,10 @@ function FormTodo({
                 projects.map((project) => (
                   <li
                     className={clsx({
-                      [styles.projectActive]: todoProject === project.name,
+                      [styles.projectActive]: projectName === project.name,
                     })}
                     onClick={() => {
-                      setTodoProject(project.name);
+                      setprojectName(project.name);
                     }}
                     key={project.id}
                   >
@@ -104,7 +105,7 @@ function FormTodo({
           </div>
         </div>
         {showButton && (
-          <button type="button" className={styles.addTodo}>
+          <button type="submit" className={styles.addTodo}>
             + Add to do
           </button>
         )}

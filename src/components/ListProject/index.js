@@ -1,16 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import clsx from "clsx";
 import styles from "./ListProject.module.scss";
 import Project from "../Project";
 import AddNewProject from "../AddNewProject";
 import { CaretUp, PencilFill, Palette } from "react-bootstrap-icons";
+import { TodoContext } from "../GlobalContext";
 
 function ListProject() {
-  const projects = [
-    { id: 1, name: "personal", numberOfTodos: 0 },
-    { id: 2, name: "work", numberOfTodos: 2 },
-    { id: 3, name: "other", numberOfTodos: 3 },
-  ];
+  const { listProject } = useContext(TodoContext);
 
   const [showMenu, setShowMenu] = useState(true);
   const [colorEdit, setColorEdit] = useState(false);
@@ -28,7 +25,7 @@ function ListProject() {
             className="editProject"
             onClick={() => setColorEdit(!colorEdit)}
           >
-            {showMenu && projects.length >= 0 && (
+            {showMenu && listProject.length >= 0 && (
               <PencilFill color={newColorEdit} size="10" />
             )}
           </span>
@@ -41,7 +38,7 @@ function ListProject() {
         </div>
       </div>
       <ul className={styles.content}>
-        {projects.map((project) => (
+        {listProject.map((project) => (
           <Project key={project.id} colorEdit={colorEdit} project={project} />
         ))}
       </ul>

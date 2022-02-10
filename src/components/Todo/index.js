@@ -42,7 +42,7 @@ function Todo({ todo }) {
         </div>
         <div
           className={styles.timeTodo}
-        >{`${todo.time} - ${todo.project}`}</div>
+        >{`${todo.time} - ${todo.projectName}`}</div>
       </div>
 
       <div className={styles.addAndDeleteTodo}>
