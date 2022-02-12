@@ -16,4 +16,9 @@
   
   - day (Todo).
   
-  
+ get todayDate.
+ get todoDate in todos
+
+ put into todoDate.diff(todoDate,"days");
+
+ 

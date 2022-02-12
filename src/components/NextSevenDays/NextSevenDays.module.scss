@@ -1,0 +1,17 @@
+.nextSevenDays {
+  .day {
+    font-size: 1.2rem;
+    display: flex;
+    .nameDay {
+    }
+    .totalTodos {
+      margin-left: 5px;
+    }
+  }
+  .todos {
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+  }
+}

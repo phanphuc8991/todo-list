@@ -1,16 +1,18 @@
 import { useState, createContext, useEffect } from "react";
-import { useTodos, useProjects } from "../../hooks";
+import { useTodos, useProjects, useListTodoFilter } from "../../hooks";
+
 export const TodoContext = createContext();
 
 function GlobalContext({ children }) {
   const listTodo = useTodos();
   const listProject = useProjects(listTodo);
 
-  const [selectedProject, setSelectedProject] = useState("other");
+  const [selectedProject, setSelectedProject] = useState("today");
+  const listTodoFilter = useListTodoFilter(listTodo, selectedProject);
   const selectedTodo = {
     selectedProject,
     setSelectedProject,
-    listTodo,
+    listTodoFilter,
     listProject,
   };
 

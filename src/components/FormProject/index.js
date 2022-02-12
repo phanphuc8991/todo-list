@@ -7,9 +7,11 @@ function FormProject({
   setValueInput,
   valuePlaceholder,
   valueBtn,
+  handleSubmit,
+  setShowModal,
 }) {
   return (
-    <div className={styles.formProject}>
+    <form onSubmit={handleSubmit} className={styles.formProject}>
       <div className={styles.header}>{titleModal}</div>
       <div className={styles.inputProject}>
         <input
@@ -21,10 +23,16 @@ function FormProject({
         />
       </div>
       <div className={styles.btns}>
-        <button>Cancel</button>
-        <button>{valueBtn}</button>
+        <button
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
+          Cancel
+        </button>
+        <button type="submit">{valueBtn}</button>
       </div>
-    </div>
+    </form>
   );
 }
 export default FormProject;

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import clsx from "clsx";
 import styles from "./FormTodo.module.scss";
 import DateFnsUtils from "@date-io/date-fns";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import {
   DatePicker,
@@ -20,7 +21,7 @@ function FormTodo({
   handleTimeChange,
   setShowModal,
   showButton = false,
-  projects = [],
+  listProject = [],
   projectName,
   setprojectName,
   selectedProject,
@@ -82,8 +83,8 @@ function FormTodo({
             </div>
 
             <ul className="listProject">
-              {projects.length > 0 ? (
-                projects.map((project) => (
+              {listProject.length > 0 ? (
+                listProject.map((project) => (
                   <li
                     className={clsx({
                       [styles.projectActive]: projectName === project.name,
@@ -106,7 +107,7 @@ function FormTodo({
         </div>
         {showButton && (
           <button type="submit" className={styles.addTodo}>
-            + Add to do
+            <span> + Add to do </span>
           </button>
         )}
       </form>
