@@ -4,16 +4,20 @@ import { useTodos, useProjects, useListTodoFilter } from "../../hooks";
 export const TodoContext = createContext();
 
 function GlobalContext({ children }) {
+  const selectedProjectDefault = "today";
   const listTodo = useTodos();
   const listProject = useProjects(listTodo);
 
-  const [selectedProject, setSelectedProject] = useState("today");
+  const [selectedProject, setSelectedProject] = useState(
+    selectedProjectDefault
+  );
   const listTodoFilter = useListTodoFilter(listTodo, selectedProject);
   const selectedTodo = {
     selectedProject,
     setSelectedProject,
     listTodoFilter,
     listProject,
+    selectedProjectDefault,
   };
 
   return (

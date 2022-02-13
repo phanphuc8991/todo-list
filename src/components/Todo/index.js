@@ -7,9 +7,15 @@ import {
   Trash,
   ArrowClockwise,
 } from "react-bootstrap-icons";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 function Todo({ todo }) {
   const [showTrash, setShowTrash] = useState(false);
+
+  async function deleteTodo(todo) {
+    await deleteDoc(doc(db, "todos", todo.id));
+  }
   return (
     <li
       className={styles.todo}
@@ -49,7 +55,7 @@ function Todo({ todo }) {
         <div className={styles.addToNextToday}>
           {todo.checked && <ArrowClockwise size="12" />}
         </div>
-        <div className={styles.deleteTodo}>
+        <div className={styles.deleteTodo} onClick={() => deleteTodo(todo)}>
           {(todo.checked || showTrash) && <Trash size="12" />}
         </div>
       </div>

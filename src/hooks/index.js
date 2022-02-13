@@ -85,6 +85,8 @@ export function useProjects(todos) {
       numberOfTodos: getnNumberOfTodos(todos, project),
       ...project,
     }));
+  } else {
+    newProject = [...projects];
   }
 
   useEffect(() => {
