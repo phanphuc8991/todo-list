@@ -23,6 +23,7 @@ export function useTodos() {
         id: todo.id,
         ...todo.data(),
       }));
+
       setTodos(newTodos);
     });
     return () => {
@@ -73,21 +74,6 @@ export function useListTodoFilter(listTodo, selectedProject) {
 
 export function useProjects(todos) {
   const [projects, setProjects] = useState([]);
-  let newProject = [];
-  if (todos.length > 0) {
-    function getnNumberOfTodos(todos, project) {
-      const numberOfTodos = todos.filter(
-        (todo) => project.name === todo.projectName
-      );
-      return numberOfTodos.length;
-    }
-    newProject = projects.map((project) => ({
-      numberOfTodos: getnNumberOfTodos(todos, project),
-      ...project,
-    }));
-  } else {
-    newProject = [...projects];
-  }
 
   useEffect(() => {
     const queryProjects = query(
@@ -96,10 +82,13 @@ export function useProjects(todos) {
     );
 
     const unsubscribe = onSnapshot(queryProjects, (projects) => {
-      const newProjects = projects.docs.map((project) => ({
-        id: project.id,
-        ...project.data(),
-      }));
+      const newProjects = projects.docs.map((project) => {
+        return {
+          ...project.data(),
+          id: project.id,
+        };
+      });
+
       setProjects(newProjects);
     });
 
@@ -108,5 +97,28 @@ export function useProjects(todos) {
     };
   }, []);
 
-  return newProject;
+  return projects;
+}
+
+export function useProjectsWithStats(todos, projects) {
+  const [projectWithStats, setprojectWithStats] = useState([]);
+  function getNumOfTodos(project, todos) {
+    const numOfTodos = todos.filter((todo) => {
+      return todo.projectName === project.name;
+    });
+
+    return numOfTodos.length;
+  }
+  useEffect(() => {
+    const newProjectsWithStats = projects.map((project) => {
+      return {
+        ...project,
+        numOfTodos: getNumOfTodos(project, todos),
+      };
+    });
+
+    setprojectWithStats(newProjectsWithStats);
+  }, [projects, todos]);
+
+  return projectWithStats;
 }

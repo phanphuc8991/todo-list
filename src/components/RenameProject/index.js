@@ -17,56 +17,67 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 function RenameProject({ showModal, setShowModal, project }) {
   const openRef = useRef(false);
-  const [valueInput, setValueInput] = useState(project.name);
   const { selectedProject, setSelectedProject } = useContext(TodoContext);
+  const [valueInput, setValueInput] = useState(project.name);
 
   function handleSubmit(e) {
     e.preventDefault();
+
     const oldValueInput = selectedProject;
-    async function updateProject() {
-      try {
-        const projectsApi = await getDocs(
-          query(collection(db, "projects"), where("name", "==", valueInput))
-        );
-
-        const newProject = {
-          name: valueInput,
-          createdAt: project.createdAt,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        };
-        if (projectsApi.empty) {
-          openRef.current = true;
-          await setDoc(doc(db, "projects", project.id), newProject);
-          setSelectedProject(valueInput);
-          const todosApi = await getDocs(
-            query(
-              collection(db, "todos"),
-              where("projectName", "==", oldValueInput)
-            )
+    if (valueInput) {
+      async function updateProject() {
+        try {
+          const projectsApi = await getDocs(
+            query(collection(db, "projects"), where("name", "==", valueInput))
           );
-          if (!todosApi.empty) {
-            console.log("d");
-            todosApi.forEach((todo) => {
-              async function updateTodos() {
-                await setDoc(doc(db, "todos", todo.id), {
-                  ...todo.data(),
-                  projectName: valueInput,
-                });
-              }
-              updateTodos();
-            });
-          }
+          console.log("project", project);
 
+          const newProject = {
+            ...project,
+            name: valueInput,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          };
+          delete newProject.id;
+          delete newProject.numOfTodos;
+
+          console.log("newProject", newProject);
+          if (projectsApi.empty) {
+            openRef.current = true;
+
+            await setDoc(doc(db, "projects", project.id), newProject);
+            console.log("da chay");
+            setSelectedProject(valueInput);
+            const todosApi = await getDocs(
+              query(
+                collection(db, "todos"),
+                where("projectName", "==", oldValueInput)
+              )
+            );
+            if (!todosApi.empty) {
+              todosApi.forEach((todo) => {
+                async function updateTodos() {
+                  await setDoc(doc(db, "todos", todo.id), {
+                    ...todo.data(),
+                    projectName: valueInput,
+                  });
+                }
+                updateTodos();
+              });
+            }
+
+            setShowModal(false);
+            openRef.current = false;
+          } else {
+            alert("Project already exists");
+          }
+        } catch (error) {
           setShowModal(false);
-          openRef.current = false;
-        } else {
-          alert("Project already exists");
         }
-      } catch (error) {
-        setShowModal(false);
       }
+      updateProject();
+    } else {
+      alert("Please enter information");
     }
-    updateProject();
   }
   return (
     <div className="renameProject">

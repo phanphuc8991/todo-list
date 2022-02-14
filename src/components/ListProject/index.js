@@ -9,7 +9,6 @@ import { TodoContext } from "../GlobalContext";
 function ListProject() {
   const { listProject } = useContext(TodoContext);
 
-  const [showMenu, setShowMenu] = useState(true);
   const [colorEdit, setColorEdit] = useState(false);
   const newColorEdit = colorEdit ? "#1ec94c" : "#000000";
 
@@ -21,14 +20,15 @@ function ListProject() {
           <span>Projects</span>
         </div>
         <div className={styles.btns}>
-          <span
-            className="editProject"
-            onClick={() => setColorEdit(!colorEdit)}
-          >
-            {showMenu && listProject.length >= 0 && (
+          {listProject.length > 0 && (
+            <span
+              className="editProject"
+              onClick={() => setColorEdit(!colorEdit)}
+            >
               <PencilFill color={newColorEdit} size="10" />
-            )}
-          </span>
+            </span>
+          )}
+
           <span className="addProject">
             <AddNewProject size="16" />
           </span>

@@ -53,6 +53,8 @@ function AddNewTodo() {
       setDesTodo("");
       setInputDate(new Date());
       setInputTime(new Date());
+    } else {
+      alert("Please enter information ");
     }
   }
 

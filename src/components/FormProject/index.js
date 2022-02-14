@@ -1,6 +1,8 @@
+import { useContext, useEffect } from "react";
 import clsx from "clsx";
 import styles from "./FormProject.module.scss";
-
+import { TodoContext } from "../GlobalContext";
+import { calendarItems } from "../../constants";
 function FormProject({
   titleModal,
   valueInput,
@@ -10,6 +12,16 @@ function FormProject({
   handleSubmit,
   setShowModal,
 }) {
+  const { selectedProject, listProject } = useContext(TodoContext);
+  useEffect(() => {
+    const checkCalendarItems = calendarItems.includes(selectedProject);
+    if (listProject.length === 0 || checkCalendarItems === true) {
+      setValueInput("");
+    } else {
+      setValueInput(selectedProject);
+    }
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className={styles.formProject}>
       <div className={styles.header}>{titleModal}</div>

@@ -4,6 +4,7 @@ import styles from "./AddNewProject.module.scss";
 import { Plus } from "react-bootstrap-icons";
 import Modal from "../Modal";
 import FormProject from "../FormProject";
+import { calendarItems } from "../../constants";
 
 import {
   collection,
@@ -20,31 +21,35 @@ function AddNewProject() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    async function addProject() {
-      try {
-        const newProjectFef = doc(collection(db, "projects"));
-        const projectsApi = await getDocs(
-          query(collection(db, "projects"), where("name", "==", valueInput))
-        );
-        if (projectsApi.empty) {
-          await setDoc(newProjectFef, {
-            name: valueInput,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          });
-        } else {
-          alert("Project already exists");
+    if (valueInput) {
+      async function addProject() {
+        try {
+          const newProjectFef = doc(collection(db, "projects"));
+          const projectsApi = await getDocs(
+            query(collection(db, "projects"), where("name", "==", valueInput))
+          );
+          const checkInputSameCalendar = calendarItems.includes(valueInput);
+          if (projectsApi.empty && !checkInputSameCalendar) {
+            await setDoc(newProjectFef, {
+              name: valueInput,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+          } else {
+            alert("Project already exists or Same with calendar");
+          }
+        } catch (error) {
+          setShowModal(false);
         }
-      } catch (error) {
-        setShowModal(false);
       }
+      addProject();
+      setShowModal(false);
+      setValueInput("");
+    } else {
+      alert("Please enter information");
     }
-    addProject();
-    setShowModal(false);
-    setValueInput("");
   }
   return (
-    <div>
+    <>
       <div
         className="addNewProject"
         onClick={() => {
@@ -64,7 +69,7 @@ function AddNewProject() {
           setShowModal={setShowModal}
         />
       </Modal>
-    </div>
+    </>
   );
 }
 export default AddNewProject;

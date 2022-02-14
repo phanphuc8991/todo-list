@@ -6,7 +6,7 @@ import NextSevenDays from "../NextSevenDays";
 import { TodoContext } from "../GlobalContext";
 
 function ListTodo() {
-  const { selectedProject, listTodoFilter } = useContext(TodoContext);
+  const { selectedProject, listTodo } = useContext(TodoContext);
 
   return (
     <div className={styles.listTodo}>
@@ -15,9 +15,9 @@ function ListTodo() {
       </div>
       <ul className={styles.contentListTodo}>
         {selectedProject === "next seven days" ? (
-          <NextSevenDays listTodo={listTodoFilter} />
+          <NextSevenDays listTodo={listTodo} />
         ) : (
-          listTodoFilter.map((todo) => <Todo key={todo.id} todo={todo} />)
+          listTodo.map((todo) => <Todo key={todo.id} todo={todo} />)
         )}
       </ul>
     </div>

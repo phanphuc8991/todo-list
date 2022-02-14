@@ -32,13 +32,12 @@ const styleDesDialog = {
 };
 function Project({ project, colorEdit }) {
   const [open, setOpen] = useState(false);
-  const [openBackdrop, setOpenBackdrop] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const { setSelectedProject, selectedProjectDefault } =
     useContext(TodoContext);
 
   async function deleteProject(project) {
-    setOpenBackdrop(true);
     try {
       await deleteDoc(doc(db, "projects", project.id));
       const queryTodos = query(
@@ -117,11 +116,11 @@ function Project({ project, colorEdit }) {
                 <XCircle size="10" />
               </div>
             </div>
-          ) : project.numberOfTodos === 0 ? (
+          ) : project.numOfTodos === 0 ? (
             ""
           ) : (
             <div className={styles.totalTodos}>
-              <span>{project.numberOfTodos}</span>
+              <span>{project.numOfTodos}</span>
             </div>
           )}
         </div>
