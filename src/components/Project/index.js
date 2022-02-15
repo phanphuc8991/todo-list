@@ -5,8 +5,8 @@ import RenameProject from "../RenameProject";
 import { Pencil, XCircle } from "react-bootstrap-icons";
 import { TodoContext } from "../GlobalContext";
 import Dialog from "@mui/material/Dialog";
-
 import Alert from "@mui/material/Alert";
+import { useSpring, animated, useTransition } from "react-spring";
 
 import {
   doc,
@@ -31,11 +31,24 @@ const styleDesDialog = {
   display: "block",
 };
 function Project({ project, colorEdit }) {
+  // STATE
   const [open, setOpen] = useState(false);
-
   const [showModal, setShowModal] = useState(false);
-  const { setSelectedProject, selectedProjectDefault } =
+  // CONTEXT
+  const { setSelectedProject, selectedProjectDefault, calendarItem } =
     useContext(TodoContext);
+
+  // ANIMATION
+  const fadeIn = useSpring({
+    from: { marginTop: "-12px", opacity: "0" },
+    to: { marginTop: "0", opacity: "1" },
+  });
+
+  const transitionProject = useTransition(colorEdit, {
+    from: { opacity: "0", right: "-20px" },
+    enter: { opacity: "1", right: "0" },
+    leave: { opacity: "0", right: "-20px" },
+  });
 
   async function deleteProject(project) {
     try {
@@ -62,8 +75,15 @@ function Project({ project, colorEdit }) {
   }
 
   return (
-    <div className={styles.project}>
-      <li onClick={() => setSelectedProject(project.name)}>
+    <>
+      <animated.div
+        style={fadeIn}
+        className={styles.project}
+        onClick={() => {
+          calendarItem.current = project.name;
+          setSelectedProject(project.name);
+        }}
+      >
         <Dialog open={open} onClose={handleClose}>
           <div>
             <Alert severity="warning">
@@ -100,38 +120,45 @@ function Project({ project, colorEdit }) {
             </button>
           </div>
         </Dialog>
-        <span className="projectTitle">{project.name}</span>
+        <span
+          className={clsx(styles.projectTitle, {
+            [styles.active]: calendarItem.current === project.name,
+          })}
+        >
+          {project.name}
+        </span>
         <div className={styles.btns}>
-          {colorEdit ? (
-            <div className={styles.editDelete}>
-              <div
-                className={styles.editProject}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              >
-                <Pencil size="10" />
-              </div>
-              <div className={styles.deleteProject} onClick={handleOpen}>
-                <XCircle size="10" />
-              </div>
-            </div>
-          ) : project.numOfTodos === 0 ? (
-            ""
-          ) : (
-            <div className={styles.totalTodos}>
-              <span>{project.numOfTodos}</span>
-            </div>
+          {transitionProject((props, item) =>
+            item ? (
+              <animated.div style={props} className={styles.editDelete}>
+                <div
+                  className={styles.editProject}
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                >
+                  <Pencil size="10" />
+                </div>
+                <div className={styles.deleteProject} onClick={handleOpen}>
+                  <XCircle size="10" />
+                </div>
+              </animated.div>
+            ) : project.numOfTodos === 0 ? (
+              ""
+            ) : (
+              <animated.div style={props} className={styles.totalTodos}>
+                <span>{project.numOfTodos}</span>
+              </animated.div>
+            )
           )}
         </div>
-      </li>
-
+      </animated.div>
       <RenameProject
         showModal={showModal}
         project={project}
         setShowModal={setShowModal}
       />
-    </div>
+    </>
   );
 }
 export default Project;

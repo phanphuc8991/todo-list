@@ -11,6 +11,8 @@ import { doc, deleteDoc, setDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import moment from "moment";
 import { TodoContext } from "../GlobalContext";
+import { useSpring, animated, useTransition } from "react-spring";
+
 function Todo({ todo }) {
   // STATE
   const [showTrash, setShowTrash] = useState(false);
@@ -18,24 +20,43 @@ function Todo({ todo }) {
   // CONTEXT
   const { selectedTodoEdit, setSelectedTodoEdit } = useContext(TodoContext);
 
+  // ANIMATION
+  const fadeIn = useSpring({
+    from: { marginTop: "-12px", opacity: "0" },
+    to: { marginTop: "0", opacity: "1" },
+  });
+
+  const transitionTodo = useTransition(todo.checked, {
+    from: { transform: "scale(0)" },
+    enter: { transform: "scale(1)" },
+    leave: { transform: "scale(0)" },
+  });
+
+  const transitionLine = useTransition(todo.checked, {
+    from: { width: "0" },
+    enter: { width: "100%" },
+    leave: { width: "0" },
+  });
+
   async function handleCheckedTodo(todo) {
-    await setDoc(doc(db, "todos", todo.id), {
+    const newTodo = {
       ...todo,
       checked: true,
-    });
+    };
+    delete newTodo.id;
+    await setDoc(doc(db, "todos", todo.id), newTodo);
   }
   async function handleNotCheckTodo(todo) {
-    await setDoc(doc(db, "todos", todo.id), {
+    const newTodo = {
       ...todo,
       checked: false,
-    });
+    };
+    delete newTodo.id;
+    await setDoc(doc(db, "todos", todo.id), newTodo);
   }
   function handleDeleteTodo(todo) {
     deleteTodo(todo);
-    console.log("selectedTodoEdit", selectedTodoEdit);
-    console.log("todo", todo);
     if (selectedTodoEdit.id === todo.id) {
-      console.log("d");
       setSelectedTodoEdit(undefined);
     }
   }
@@ -59,7 +80,8 @@ function Todo({ todo }) {
     }
   }
   return (
-    <li
+    <animated.li
+      style={fadeIn}
       className={styles.todo}
       onMouseEnter={() => {
         setShowTrash(true);
@@ -69,22 +91,27 @@ function Todo({ todo }) {
       }}
     >
       <div className={styles.checkTodo}>
-        {todo.checked ? (
-          <div
-            className={styles.checkedTodo}
-            onClick={() => handleNotCheckTodo(todo)}
-          >
-            <CheckCircleFill size="12" color="#bebebe" />
-          </div>
-        ) : (
-          <div
-            className={styles.unCheckedTodo}
-            onClick={() => handleCheckedTodo(todo)}
-          >
-            <Circle size="12" color={todo.color} />
-          </div>
+        {transitionTodo((props, item) =>
+          item ? (
+            <animated.div
+              style={props}
+              className={styles.checkedTodo}
+              onClick={() => handleNotCheckTodo(todo)}
+            >
+              <CheckCircleFill size="13" color="#bebebe" />
+            </animated.div>
+          ) : (
+            <animated.div
+              className={styles.unCheckedTodo}
+              style={props}
+              onClick={() => handleCheckedTodo(todo)}
+            >
+              <Circle size="13" color={todo.color} />
+            </animated.div>
+          )
         )}
       </div>
+
       <div
         className={clsx(styles.desTodo, {
           [styles.desTodoCheckColor]: todo.checked,
@@ -93,7 +120,16 @@ function Todo({ todo }) {
       >
         <div className={styles.nameTodo}>
           {todo.text}
-          {todo.checked && <div className={styles.line}></div>}
+
+          {transitionLine(
+            (props, item) =>
+              item && (
+                <animated.div
+                  style={props}
+                  className={styles.line}
+                ></animated.div>
+              )
+          )}
         </div>
         <div
           className={styles.timeTodo}
@@ -102,16 +138,16 @@ function Todo({ todo }) {
 
       <div className={styles.addAndDeleteTodo}>
         <div className={styles.addToNextToday} onClick={() => repeatTodo(todo)}>
-          {todo.checked && <ArrowClockwise size="12" />}
+          {todo.checked && <ArrowClockwise size="13" />}
         </div>
         <div
           className={styles.deleteTodo}
           onClick={() => handleDeleteTodo(todo)}
         >
-          {(todo.checked || showTrash) && <Trash size="12" />}
+          {(todo.checked || showTrash) && <Trash size="13" />}
         </div>
       </div>
-    </li>
+    </animated.li>
   );
 }
 export default Todo;

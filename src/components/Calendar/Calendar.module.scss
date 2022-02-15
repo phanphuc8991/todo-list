@@ -8,7 +8,7 @@
 
     .title {
       span {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         font-weight: bold;
       }
     }
@@ -29,7 +29,7 @@
     }
     .btns:hover {
       background-color: #ebebeb;
-      transition: all 300ms ease;
+      transition: background 300ms ease;
       cursor: pointer;
     }
   }
@@ -40,9 +40,14 @@
       padding: 0;
       margin-left: 11px;
       list-style: none;
-      li {
+      .calendarItem {
         cursor: pointer;
-        padding-bottom: 5px;
+        padding-bottom: 10px;
+        font-size: 1.3rem;
+      }
+      .active {
+        font-weight: bold;
+        color: gray;
       }
     }
   }

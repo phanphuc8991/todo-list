@@ -3,15 +3,21 @@
   align-items: center;
   padding-bottom: 10px;
 
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
   .checkTodo {
     margin-right: 5px;
     position: relative;
     top: 2px;
+    height: 32px;
+    width: 15px;
     .checkedTodo {
+      position: absolute;
+      top: 8px;
     }
     .unCheckedTodo {
+      top: 8px;
+      position: absolute;
     }
   }
   .desTodo {
@@ -21,14 +27,14 @@
       position: relative;
       .line {
         position: absolute;
-        border-bottom: 1px solid #ebebeb;
+        border-bottom: 1px solid gray;
         width: 100%;
         top: 50%;
       }
     }
   }
   .desTodoCheckColor {
-    color: #ebebeb;
+    color: gray;
   }
   .addAndDeleteTodo {
     display: flex;

@@ -9,7 +9,7 @@
 
     .title {
       span {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         font-weight: bold;
       }
     }
@@ -43,7 +43,7 @@
 
       span:hover {
         background-color: #ebebeb;
-        transition: all 300ms ease;
+        transition: background 300ms ease;
         cursor: pointer;
       }
     }
@@ -54,5 +54,8 @@
     margin-top: 6px;
     margin-left: 11px;
     list-style: none;
+    li {
+      margin-bottom: 8px;
+    }
   }
 }

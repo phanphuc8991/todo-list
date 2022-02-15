@@ -4,11 +4,12 @@
   height: 80%;
   left: 40px;
   top: 107px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: white;
+  opacity: 0.8;
   .selectedProject {
     margin-top: 1rem;
     margin-left: 1rem;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: bold;
   }
   .contentListTodo {

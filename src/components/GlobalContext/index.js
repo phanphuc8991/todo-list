@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useRef } from "react";
 import {
   useTodos,
   useProjects,
@@ -10,6 +10,7 @@ export const TodoContext = createContext();
 
 function GlobalContext({ children }) {
   const selectedProjectDefault = "today";
+  const calendarItem = useRef("today");
   const [selectedProject, setSelectedProject] = useState(
     selectedProjectDefault
   );
@@ -27,6 +28,7 @@ function GlobalContext({ children }) {
     selectedTodoEdit,
     setSelectedProject,
     setSelectedTodoEdit,
+    calendarItem,
   };
 
   return (
