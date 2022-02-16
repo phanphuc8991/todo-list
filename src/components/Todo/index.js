@@ -1,14 +1,14 @@
 import { useState, useContext } from "react";
 import clsx from "clsx";
 import styles from "./Todo.module.scss";
+import { doc, deleteDoc, setDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 import {
   Circle,
   CheckCircleFill,
   Trash,
   ArrowClockwise,
 } from "react-bootstrap-icons";
-import { doc, deleteDoc, setDoc, collection } from "firebase/firestore";
-import { db } from "../../firebase";
 import moment from "moment";
 import { TodoContext } from "../GlobalContext";
 import { useSpring, animated, useTransition } from "react-spring";
@@ -20,7 +20,7 @@ function Todo({ todo }) {
   // CONTEXT
   const { selectedTodoEdit, setSelectedTodoEdit } = useContext(TodoContext);
 
-  // ANIMATION
+  // ANIMATED
   const fadeIn = useSpring({
     from: { marginTop: "-12px", opacity: "0" },
     to: { marginTop: "0", opacity: "1" },
@@ -38,6 +38,7 @@ function Todo({ todo }) {
     leave: { width: "0" },
   });
 
+  // METHOD
   async function handleCheckedTodo(todo) {
     const newTodo = {
       ...todo,
@@ -56,7 +57,11 @@ function Todo({ todo }) {
   }
   function handleDeleteTodo(todo) {
     deleteTodo(todo);
-    if (selectedTodoEdit.id === todo.id) {
+    console.log(selectedTodoEdit.createdAt.nanoseconds);
+    console.log(todo.createdAt.nanoseconds);
+
+    if (selectedTodoEdit.createdAt.nanoseconds === todo.createdAt.nanoseconds) {
+      console.log("bang nhau");
       setSelectedTodoEdit(undefined);
     }
   }

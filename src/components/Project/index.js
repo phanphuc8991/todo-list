@@ -1,13 +1,6 @@
 import { useState, useContext } from "react";
 import clsx from "clsx";
 import styles from "./Project.module.scss";
-import RenameProject from "../RenameProject";
-import { Pencil, XCircle } from "react-bootstrap-icons";
-import { TodoContext } from "../GlobalContext";
-import Dialog from "@mui/material/Dialog";
-import Alert from "@mui/material/Alert";
-import { useSpring, animated, useTransition } from "react-spring";
-
 import {
   doc,
   deleteDoc,
@@ -17,6 +10,14 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { useSpring, animated, useTransition } from "react-spring";
+import { Pencil, XCircle } from "react-bootstrap-icons";
+import { TodoContext } from "../GlobalContext";
+import Dialog from "@mui/material/Dialog";
+import Alert from "@mui/material/Alert";
+import RenameProject from "../RenameProject";
+
+// STYLE
 const styleButtonDialog = {
   width: "50%",
   border: "none",
@@ -30,15 +31,17 @@ const styleDesDialog = {
   fontSize: "1.1rem",
   display: "block",
 };
+
 function Project({ project, colorEdit }) {
   // STATE
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   // CONTEXT
   const { setSelectedProject, selectedProjectDefault, calendarItem } =
     useContext(TodoContext);
 
-  // ANIMATION
+  // ANIMATED
   const fadeIn = useSpring({
     from: { marginTop: "-12px", opacity: "0" },
     to: { marginTop: "0", opacity: "1" },
@@ -50,6 +53,7 @@ function Project({ project, colorEdit }) {
     leave: { opacity: "0", right: "-20px" },
   });
 
+  // METHOD
   async function deleteProject(project) {
     try {
       await deleteDoc(doc(db, "projects", project.id));

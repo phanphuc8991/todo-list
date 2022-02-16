@@ -1,5 +1,4 @@
 import { useEffect, useContext, useRef } from "react";
-import clsx from "clsx";
 import styles from "./Sidebar.module.scss";
 import { TodoContext } from "../GlobalContext";
 function SideBar({ children }) {
@@ -9,6 +8,14 @@ function SideBar({ children }) {
   // CONTEXT
   const { setSelectedTodoEdit } = useContext(TodoContext);
 
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  });
+
+  // METHOD
   function handleClick(e) {
     if (
       e.target === sidebarRef.current ||
@@ -17,12 +24,7 @@ function SideBar({ children }) {
       setSelectedTodoEdit(undefined);
     }
   }
-  useEffect(() => {
-    document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  });
+
   return (
     <div ref={sidebarRef} className={styles.sideBar}>
       {children}

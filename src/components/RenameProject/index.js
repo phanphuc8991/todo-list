@@ -1,8 +1,5 @@
 import { useState, useContext, useRef } from "react";
-import clsx from "clsx";
-import styles from "./RenameProject.module.scss";
-import Modal from "../Modal";
-import FormProject from "../FormProject";
+
 import {
   collection,
   doc,
@@ -15,14 +12,23 @@ import firebase, { db } from "../../firebase";
 import { TodoContext } from "../GlobalContext";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Modal from "../Modal";
+import FormProject from "../FormProject";
+// import clsx from "clsx";
+// import styles from "./RenameProject.module.scss";
+
 function RenameProject({ showModal, setShowModal, project }) {
   const openRef = useRef(false);
+
+  // CONTEXT
   const { selectedProject, setSelectedProject } = useContext(TodoContext);
+
+  // STATE
   const [valueInput, setValueInput] = useState(project.name);
 
+  // METHOD
   function handleSubmit(e) {
     e.preventDefault();
-
     const oldValueInput = selectedProject;
     if (valueInput) {
       async function updateProject() {

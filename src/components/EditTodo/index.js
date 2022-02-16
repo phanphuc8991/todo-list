@@ -1,20 +1,23 @@
 import { useState, useContext, useEffect } from "react";
-import clsx from "clsx";
 import styles from "./EditTodo.module.scss";
-import FormTodo from "../FormTodo";
-import { TodoContext } from "../GlobalContext";
-import moment from "moment";
 import { doc, setDoc } from "firebase/firestore";
 import firebase, { db } from "../../firebase";
+import moment from "moment";
+import { TodoContext } from "../GlobalContext";
+import FormTodo from "../FormTodo";
+
+// import clsx from "clsx";
 function EditTodo() {
   // STATES
   const [desTodo, setDesTodo] = useState("");
   const [inputDate, setInputDate] = useState(new Date());
   const [inputTime, setInputTime] = useState(new Date());
   const [projectName, setprojectName] = useState("");
+
   // CONTEXT
   const { selectedTodoEdit, selectedProject, listProject } =
     useContext(TodoContext);
+
   useEffect(() => {
     if (selectedTodoEdit) {
       setDesTodo(selectedTodoEdit.text);
@@ -42,12 +45,14 @@ function EditTodo() {
     }
   }, [desTodo, inputDate, inputTime, projectName]);
 
+  // METHOD
   function handleDateChange(date) {
     setInputDate(date);
   }
   function handleTimeChange(time) {
     setInputTime(time);
   }
+
   return (
     <>
       {selectedTodoEdit && (

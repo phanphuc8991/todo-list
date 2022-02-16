@@ -2,9 +2,9 @@ import { useContext, useState } from "react";
 import clsx from "clsx";
 import styles from "./Calendar.module.scss";
 import { CalendarDate, CaretUp } from "react-bootstrap-icons";
+import { useSpring, animated } from "react-spring";
 import { calendarItems } from "../../constants";
 import { TodoContext } from "../GlobalContext";
-import { useSpring, animated } from "react-spring";
 
 function Calendar() {
   // STATE

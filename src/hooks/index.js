@@ -1,18 +1,11 @@
 import { useState, useEffect } from "react";
-
-import {
-  collection,
-  query,
-  getDocs,
-  where,
-  onSnapshot,
-  orderBy,
-} from "firebase/firestore";
+import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 import { calendarItems } from "../constants";
 import moment from "moment";
 
 export function useTodos() {
+  // STATE
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
@@ -33,9 +26,13 @@ export function useTodos() {
 
   return todos;
 }
+
 export function useListTodoFilter(listTodo, selectedProject) {
   let dataTodos;
+
+  // STATE
   const [filteredTodos, setfilteredTodos] = useState([]);
+
   useEffect(() => {
     switch (selectedProject) {
       case calendarItems[0]:
@@ -43,22 +40,21 @@ export function useListTodoFilter(listTodo, selectedProject) {
           return todo.date === moment(new Date()).format("DD/MM/YYYY");
         });
         break;
+
       case calendarItems[1]:
         const todayDateFormated = moment().format("DD/MM/YYYY");
 
         dataTodos = listTodo.filter((todo) => {
           const todoDate = moment(todo.date, "DD/MM/YYYY");
           const todayDate = moment(todayDateFormated, "DD/MM/YYYY");
-
           const dateInWeek = todoDate.diff(todayDate, "days");
 
           return dateInWeek >= 0 && dateInWeek <= 6;
         });
-
         break;
+
       case calendarItems[2]:
         dataTodos = [...listTodo];
-
         break;
 
       default:
@@ -72,7 +68,8 @@ export function useListTodoFilter(listTodo, selectedProject) {
   return filteredTodos;
 }
 
-export function useProjects(todos) {
+export function useProjects() {
+  // STATE
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -80,7 +77,6 @@ export function useProjects(todos) {
       collection(db, "projects"),
       orderBy("createdAt")
     );
-
     const unsubscribe = onSnapshot(queryProjects, (projects) => {
       const newProjects = projects.docs.map((project) => {
         return {
@@ -101,12 +97,13 @@ export function useProjects(todos) {
 }
 
 export function useProjectsWithStats(todos, projects) {
+  // STATE
   const [projectWithStats, setprojectWithStats] = useState([]);
+
   function getNumOfTodos(project, todos) {
     const numOfTodos = todos.filter((todo) => {
-      return todo.projectName === project.name;
+      return todo.projectName === project.name && !todo.checked;
     });
-
     return numOfTodos.length;
   }
   useEffect(() => {

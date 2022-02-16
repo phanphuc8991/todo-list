@@ -1,18 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
-import { collection, doc, setDoc } from "firebase/firestore";
-import firebase, { db } from "../../firebase";
 import clsx from "clsx";
 import styles from "./AddNewTodo.module.scss";
-import Modal from "../Modal";
-import FormTodo from "../FormTodo";
+import { collection, doc, setDoc } from "firebase/firestore";
+import firebase, { db } from "../../firebase";
 import { TodoContext } from "../GlobalContext";
+import { calendarItems } from "../../constants";
 import moment from "moment";
 import randomColor from "randomcolor";
-import { calendarItems } from "../../constants";
+import Modal from "../Modal";
+import FormTodo from "../FormTodo";
 
 function AddNewTodo() {
+  // CONTEXT
   const { selectedProject, listProject } = useContext(TodoContext);
 
+  // STATE
   const [showModal, setShowModal] = useState(false);
   const [desTodo, setDesTodo] = useState("");
   const [inputDate, setInputDate] = useState(new Date());
@@ -23,6 +25,7 @@ function AddNewTodo() {
     setprojectName(selectedProject);
   }, [selectedProject]);
 
+  // METHOD
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -61,6 +64,7 @@ function AddNewTodo() {
   function handleDateChange(date) {
     setInputDate(date);
   }
+
   function handleTimeChange(time) {
     setInputTime(time);
   }

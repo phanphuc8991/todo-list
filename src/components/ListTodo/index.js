@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import clsx from "clsx";
 import styles from "./ListTodo.module.scss";
+import { TodoContext } from "../GlobalContext";
 import Todo from "../Todo";
 import NextSevenDays from "../NextSevenDays";
-import { TodoContext } from "../GlobalContext";
+// import clsx from "clsx";
 
 function ListTodo() {
+  // CONTEXT
   const { selectedProject, listTodo } = useContext(TodoContext);
 
   return (

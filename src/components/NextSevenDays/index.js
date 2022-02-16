@@ -5,6 +5,7 @@ import Todo from "../Todo";
 import moment from "moment";
 
 function NextSevenDays({ listTodo }) {
+  // STATE
   const days = ["0", "1", "2", "3", "4", "5", "6"];
   const [weekTodos, setWeekTodos] = useState([]);
 

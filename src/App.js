@@ -1,27 +1,15 @@
-import styles from "./App.module.scss";
-import Sidebar from "./components/Sidebar";
-import User from "./components/User";
-import AddNewTodo from "./components/AddNewTodo";
-import Calendar from "./components/Calendar";
-import ListProject from "./components/ListProject";
-import Main from "./components/Main";
-import ListTodo from "./components/ListTodo";
-import EditTodo from "./components/EditTodo";
+import Login from "./components/Login";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import TodoContainer from "./components/TodoContainer";
 
 function App() {
   return (
-    <div className={styles.app}>
-      <Sidebar>
-        <User />
-        <Calendar />
-        <AddNewTodo />
-        <ListProject />
-      </Sidebar>
-      <Main>
-        <ListTodo />
-        <EditTodo />
-      </Main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact element={<Login />} path="/login" />
+        <Route element={<TodoContainer />} path="/" />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

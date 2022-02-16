@@ -1,18 +1,22 @@
 import { useState, useContext } from "react";
-import clsx from "clsx";
 import styles from "./ListProject.module.scss";
+import { TodoContext } from "../GlobalContext";
+import { useSpring, animated } from "react-spring";
 import Project from "../Project";
 import AddNewProject from "../AddNewProject";
 import { CaretUp, PencilFill, Palette } from "react-bootstrap-icons";
-import { TodoContext } from "../GlobalContext";
-import { useSpring, animated } from "react-spring";
+// import clsx from "clsx";
+
 function ListProject() {
-  // STATE
+  // CONTEXT
   const { listProject } = useContext(TodoContext);
+
+  // STATE
   const [colorEdit, setColorEdit] = useState(false);
   const newColorEdit = colorEdit ? "#1ec94c" : "#000000";
   const [menu, setMenu] = useState(false);
-  // ANIMATION
+
+  // ANIMATED
   const spin = useSpring({
     transform: menu ? "rotate(180deg)" : "rotate(0deg)",
     config: { friction: 10 },

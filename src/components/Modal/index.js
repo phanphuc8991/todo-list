@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import clsx from "clsx";
 import styles from "./Modal.module.scss";
 import { useSpring, animated } from "react-spring";
+// import clsx from "clsx";
 function Modal({ children, showModal, setShowModal }) {
   const refModal = useRef(null);
 
@@ -11,6 +11,8 @@ function Modal({ children, showModal, setShowModal }) {
     top: showModal ? "25%" : "0",
     config: { friction: 10 },
   });
+
+  // METHOD
   function handleModal(e) {
     if (e.target === refModal.current) {
       setShowModal(false);

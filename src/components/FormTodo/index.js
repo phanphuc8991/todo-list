@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import clsx from "clsx";
 import styles from "./FormTodo.module.scss";
 import DateFnsUtils from "@date-io/date-fns";
-import CircularProgress from "@mui/material/CircularProgress";
-
 import {
   DatePicker,
   TimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import { Bell, Palette, CalendarDay, Clock, X } from "react-bootstrap-icons";
+
 function FormTodo({
   handleSubmit,
   headingTodo,
@@ -31,6 +30,7 @@ function FormTodo({
       setprojectName(selectedProject);
     }
   }, []);
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <form onSubmit={handleSubmit}>

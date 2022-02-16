@@ -1,0 +1,72 @@
+import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+const paperStyle = {
+  height: "70vh",
+  width: "280px",
+  padding: "20px",
+  margin: "20px auto",
+};
+const avatarStyle = {
+  backgroundColor: "#0080ff",
+};
+const btnSubmit = {
+  margin: "10px 0",
+  backgroundColor: "#0080ff",
+};
+function Login() {
+  function handleLogin() {
+    const auth = getAuth();
+    const fbProvider = new GoogleAuthProvider();
+    signInWithPopup(auth, fbProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log("user", user);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+  return (
+    <Grid>
+      <Paper elevation={10} style={paperStyle}>
+        <Grid align="center">
+          <Avatar style={avatarStyle}>
+            <LockOutlinedIcon style={{ fontSize: "25px" }} />
+          </Avatar>
+          <h1>Log in</h1>
+        </Grid>
+        <TextField
+          label="Username"
+          placeholder="Enter username"
+          fullWidth
+          required
+        />
+        <TextField
+          label="Password"
+          placeholder="Enter password"
+          fullWidth
+          required
+        />
+        <Button variant="contained" color="primary" fullWidth style={btnSubmit}>
+          Sign In
+        </Button>
+
+        <Grid container spacing={1}>
+          <Grid item xs={6}>
+            <Button variant="outlined" fullWidth onClick={handleLogin}>
+              Email
+            </Button>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Button variant="outlined" fullWidth>
+              FaceBook
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Grid>
+  );
+}
+export default Login;

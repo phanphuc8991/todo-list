@@ -1,11 +1,4 @@
 import { useState } from "react";
-import clsx from "clsx";
-import styles from "./AddNewProject.module.scss";
-import { Plus } from "react-bootstrap-icons";
-import Modal from "../Modal";
-import FormProject from "../FormProject";
-import { calendarItems } from "../../constants";
-
 import {
   collection,
   doc,
@@ -15,10 +8,19 @@ import {
   where,
 } from "firebase/firestore";
 import firebase, { db } from "../../firebase";
+import { calendarItems } from "../../constants";
+import { Plus } from "react-bootstrap-icons";
+import Modal from "../Modal";
+import FormProject from "../FormProject";
+// import clsx from "clsx";
+// import styles from "./AddNewProject.module.scss";
+
 function AddNewProject() {
+  // STATE
   const [showModal, setShowModal] = useState(false);
   const [valueInput, setValueInput] = useState("");
 
+  // METHOD
   function handleSubmit(event) {
     event.preventDefault();
     if (valueInput) {
@@ -48,6 +50,7 @@ function AddNewProject() {
       alert("Please enter information");
     }
   }
+
   return (
     <>
       <div

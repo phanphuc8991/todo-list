@@ -21,4 +21,9 @@
 
  put into todoDate.diff(todoDate,"days");
 
- 
+ Luc dang nhap vao: 
+
+ Lay du lieu luu vao database.
+  - co userId 
+
+  userId gan Project.
