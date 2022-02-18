@@ -12,7 +12,7 @@ import FormTodo from "../FormTodo";
 
 function AddNewTodo() {
   // CONTEXT
-  const { selectedProject, listProject } = useContext(TodoContext);
+  const { selectedProject, listProject, auth } = useContext(TodoContext);
 
   // STATE
   const [showModal, setShowModal] = useState(false);
@@ -32,6 +32,7 @@ function AddNewTodo() {
     const checkprojectNameExist = calendarItems.includes(projectName);
 
     if (desTodo && !checkprojectNameExist) {
+      console.log("auth", auth);
       const dataTodo = {
         text: desTodo,
         date: moment(inputDate).format("DD/MM/YYYY"),
@@ -41,6 +42,7 @@ function AddNewTodo() {
         color: randomColor(),
         checked: false,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        userId: auth.userId,
       };
 
       async function addTodo() {

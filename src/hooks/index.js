@@ -1,10 +1,89 @@
 import { useState, useEffect } from "react";
-import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
-import { db } from "../firebase";
+import {
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+} from "firebase/firestore";
+import firebase, { db } from "../firebase";
 import { calendarItems } from "../constants";
 import moment from "moment";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-export function useTodos() {
+import { useNavigate } from "react-router-dom";
+export function useAuth() {
+  const [user, setUser] = useState("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    const auth = getAuth();
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        async function getUser() {
+          try {
+            const { displayName, email, photoURL, uid } = user;
+            const newUser = {
+              displayName,
+              email,
+              photoURL,
+              userId: uid,
+            };
+            const qFirst = query(
+              collection(db, "users"),
+              where("userId", "==", newUser.userId)
+            );
+
+            const querySnapshotFirst = await getDocs(qFirst);
+
+            if (querySnapshotFirst.docs.length === 0) {
+              const newUserFef = doc(collection(db, "users"));
+              await setDoc(newUserFef, {
+                ...newUser,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+
+              const qSecond = query(
+                collection(db, "users"),
+                where("userId", "==", newUser.userId)
+              );
+              const querySnapshotSecond = await getDocs(qSecond);
+
+              querySnapshotSecond.forEach((doc) => {
+                setUser({
+                  id: doc.id,
+                  ...doc.data(),
+                });
+              });
+            } else {
+              querySnapshotFirst.forEach((doc) => {
+                setUser({
+                  id: doc.id,
+                  ...doc.data(),
+                });
+              });
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+        }
+        getUser();
+        navigate("/");
+        return;
+      }
+      navigate("/login");
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  return user;
+}
+
+export function useTodos(auth) {
   // STATE
   const [todos, setTodos] = useState([]);
 
@@ -12,18 +91,21 @@ export function useTodos() {
     const queryTodos = query(collection(db, "todos"), orderBy("time"));
 
     const unsubscribe = onSnapshot(queryTodos, (todos) => {
-      const newTodos = todos.docs.map((todo) => ({
+      const filterTodo = todos.docs.filter(
+        (todo) => todo.data().userId === auth.userId
+      );
+      const newTodos = filterTodo.map((todo) => ({
         id: todo.id,
         ...todo.data(),
       }));
-
+      console.log("newTodo", newTodos);
       setTodos(newTodos);
     });
+
     return () => {
       unsubscribe();
     };
-  }, []);
-
+  }, [auth]);
   return todos;
 }
 
@@ -68,7 +150,7 @@ export function useListTodoFilter(listTodo, selectedProject) {
   return filteredTodos;
 }
 
-export function useProjects() {
+export function useProjects(auth) {
   // STATE
   const [projects, setProjects] = useState([]);
 
@@ -78,20 +160,24 @@ export function useProjects() {
       orderBy("createdAt")
     );
     const unsubscribe = onSnapshot(queryProjects, (projects) => {
-      const newProjects = projects.docs.map((project) => {
+      const filterProjects = projects.docs.filter(
+        (project) => project.data().userId === auth.userId
+      );
+
+      const newProjects = filterProjects.map((project) => {
         return {
           ...project.data(),
           id: project.id,
         };
       });
-
+      console.log("newProjects", newProjects);
       setProjects(newProjects);
     });
 
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [auth]);
 
   return projects;
 }

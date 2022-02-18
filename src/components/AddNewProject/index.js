@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   collection,
   doc,
@@ -12,10 +12,12 @@ import { calendarItems } from "../../constants";
 import { Plus } from "react-bootstrap-icons";
 import Modal from "../Modal";
 import FormProject from "../FormProject";
-// import clsx from "clsx";
-// import styles from "./AddNewProject.module.scss";
+import { TodoContext } from "../GlobalContext";
 
 function AddNewProject() {
+  // CONTEXT
+  const { auth } = useContext(TodoContext);
+
   // STATE
   const [showModal, setShowModal] = useState(false);
   const [valueInput, setValueInput] = useState("");
@@ -35,6 +37,7 @@ function AddNewProject() {
             await setDoc(newProjectFef, {
               name: valueInput,
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              userId: auth.userId,
             });
           } else {
             alert("Project already exists or Same with calendar");

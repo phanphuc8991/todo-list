@@ -10,14 +10,18 @@ import {
 export const TodoContext = createContext();
 
 function GlobalContext({ children }) {
+  const auth = useAuth();
+
   const selectedProjectDefault = "today";
   const calendarItem = useRef("today");
   const [selectedProject, setSelectedProject] = useState(
     selectedProjectDefault
   );
   const [selectedTodoEdit, setSelectedTodoEdit] = useState(undefined);
-  const listTodo = useTodos();
-  const listProject = useProjects(listTodo);
+
+  const listTodo = useTodos(auth);
+
+  const listProject = useProjects(auth);
   const projectsWithStats = useProjectsWithStats(listTodo, listProject);
   const listTodoFilter = useListTodoFilter(listTodo, selectedProject);
   const selectedTodo = {
@@ -27,9 +31,9 @@ function GlobalContext({ children }) {
     listProject: projectsWithStats,
     selectedProjectDefault,
     selectedTodoEdit,
-    setSelectedProject,
     setSelectedTodoEdit,
     calendarItem,
+    auth,
   };
 
   return (

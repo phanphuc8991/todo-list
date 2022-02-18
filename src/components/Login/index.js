@@ -1,6 +1,7 @@
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 const paperStyle = {
   height: "70vh",
   width: "280px",
@@ -15,18 +16,43 @@ const btnSubmit = {
   backgroundColor: "#0080ff",
 };
 function Login() {
-  function handleLogin() {
+  async function handleLogin() {
     const auth = getAuth();
     const fbProvider = new GoogleAuthProvider();
-    signInWithPopup(auth, fbProvider)
-      .then((result) => {
-        const user = result.user;
-        console.log("user", user);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    try {
+      const dataUser = await signInWithPopup(auth, fbProvider);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // try {
+    //   const dataUser = await signInWithPopup(auth, fbProvider);
+    //   const { displayName, email, photoURL, uid } = dataUser.user;
+    //   const newUser = {
+    //     displayName,
+    //     email,
+    //     photoURL,
+    //     userId: uid,
+    //   };
+    //   const q = query(
+    //     collection(db, "users"),
+    //     where("userId", "==", newUser.userId)
+    //   );
+    //   const querySnapshot = await getDocs(q);
+    //   if (querySnapshot.docs.length === 0) {
+    //     const newUserFef = doc(collection(db, "users"));
+    //     await setDoc(newUserFef, {
+    //       ...newUser,
+    //       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    //     });
+    //   } else {
+    //     console.log("user da ton tai");
+    //   }
+    // } catch (error) {
+    //   console.log("error", error);
+    // }
   }
+
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
