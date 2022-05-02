@@ -21,7 +21,7 @@ function RenameProject({ showModal, setShowModal, project }) {
   const openRef = useRef(false);
 
   // CONTEXT
-  const { selectedProject, setSelectedProject } = useContext(TodoContext);
+  const { selectedProject, setSelectedProject, auth } = useContext(TodoContext);
 
   // STATE
   const [valueInput, setValueInput] = useState(project.name);
@@ -34,9 +34,12 @@ function RenameProject({ showModal, setShowModal, project }) {
       async function updateProject() {
         try {
           const projectsApi = await getDocs(
-            query(collection(db, "projects"), where("name", "==", valueInput))
+            query(
+              collection(db, "projects"),
+              where("name", "==", valueInput),
+              where("userId", "==", auth.userId)
+            )
           );
-          console.log("project", project);
 
           const newProject = {
             ...project,
@@ -51,12 +54,13 @@ function RenameProject({ showModal, setShowModal, project }) {
             openRef.current = true;
 
             await setDoc(doc(db, "projects", project.id), newProject);
-            console.log("da chay");
+
             setSelectedProject(valueInput);
             const todosApi = await getDocs(
               query(
                 collection(db, "todos"),
-                where("projectName", "==", oldValueInput)
+                where("projectName", "==", oldValueInput),
+                where("userId", "==", auth.userId)
               )
             );
             if (!todosApi.empty) {

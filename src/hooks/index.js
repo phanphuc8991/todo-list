@@ -13,16 +13,16 @@ import firebase, { db } from "../firebase";
 import { calendarItems } from "../constants";
 import moment from "moment";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
 import { useNavigate } from "react-router-dom";
+
 export function useAuth() {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const auth = getAuth();
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("user", user);
         async function getUser() {
           try {
             const { displayName, email, photoURL, uid } = user;
@@ -71,13 +71,16 @@ export function useAuth() {
           }
         }
         getUser();
-        navigate("/");
+        navigate("/todo");
         return;
       }
       navigate("/login");
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      console.log("component unmouted");
+    };
   }, []);
 
   return user;
@@ -98,7 +101,7 @@ export function useTodos(auth) {
         id: todo.id,
         ...todo.data(),
       }));
-      console.log("newTodo", newTodos);
+
       setTodos(newTodos);
     });
 
@@ -170,7 +173,7 @@ export function useProjects(auth) {
           id: project.id,
         };
       });
-      console.log("newProjects", newProjects);
+
       setProjects(newProjects);
     });
 

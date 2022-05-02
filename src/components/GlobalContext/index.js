@@ -6,12 +6,12 @@ import {
   useProjectsWithStats,
   useAuth,
 } from "../../hooks";
-
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 export const TodoContext = createContext();
 
 function GlobalContext({ children }) {
   const auth = useAuth();
-
   const selectedProjectDefault = "today";
   const calendarItem = useRef("today");
   const [selectedProject, setSelectedProject] = useState(
@@ -37,7 +37,16 @@ function GlobalContext({ children }) {
   };
 
   return (
-    <TodoContext.Provider value={selectedTodo}>{children}</TodoContext.Provider>
+    <TodoContext.Provider value={selectedTodo}>
+      {console.log("auth", auth)}
+      {auth.length === 0 && (
+        <Box sx={{ width: "100%" }} style={{ position: "fixed", zIndex: 1 }}>
+          <LinearProgress />
+        </Box>
+      )}
+
+      {children}
+    </TodoContext.Provider>
   );
 }
 export default GlobalContext;

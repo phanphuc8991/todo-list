@@ -8,7 +8,8 @@ import FormTodo from "../FormTodo";
 
 // import clsx from "clsx";
 function EditTodo() {
-  // STATES
+  // Use STATES
+  // Use State
   const [desTodo, setDesTodo] = useState("");
   const [inputDate, setInputDate] = useState(new Date());
   const [inputTime, setInputTime] = useState(new Date());

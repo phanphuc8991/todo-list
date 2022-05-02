@@ -1,6 +1,7 @@
 import { useEffect, useContext, useRef } from "react";
 import styles from "./Sidebar.module.scss";
 import { TodoContext } from "../GlobalContext";
+
 function SideBar({ children }) {
   // STATE
   const sidebarRef = useRef();

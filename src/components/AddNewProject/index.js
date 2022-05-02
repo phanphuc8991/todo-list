@@ -30,7 +30,11 @@ function AddNewProject() {
         try {
           const newProjectFef = doc(collection(db, "projects"));
           const projectsApi = await getDocs(
-            query(collection(db, "projects"), where("name", "==", valueInput))
+            query(
+              collection(db, "projects"),
+              where("name", "==", valueInput),
+              where("userId", "==", auth.userId)
+            )
           );
           const checkInputSameCalendar = calendarItems.includes(valueInput);
           if (projectsApi.empty && !checkInputSameCalendar) {
@@ -39,6 +43,8 @@ function AddNewProject() {
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
               userId: auth.userId,
             });
+            setShowModal(false);
+            setValueInput("");
           } else {
             alert("Project already exists or Same with calendar");
           }
@@ -47,8 +53,6 @@ function AddNewProject() {
         }
       }
       addProject();
-      setShowModal(false);
-      setValueInput("");
     } else {
       alert("Please enter information");
     }

@@ -8,20 +8,22 @@ import ListProject from "./components/ListProject";
 import Main from "./components/Main";
 import ListTodo from "./components/ListTodo";
 import EditTodo from "./components/EditTodo";
-
+import GlobalContext from "./components/GlobalContext";
 function App() {
   return (
     <div className={styles.app}>
-      <Sidebar>
-        <User />
-        <Calendar />
-        <AddNewTodo />
-        <ListProject />
-      </Sidebar>
-      <Main>
-        <ListTodo />
-        <EditTodo />
-      </Main>
+      <GlobalContext>
+        <Sidebar>
+          <User />
+          <Calendar />
+          <AddNewTodo />
+          <ListProject />
+        </Sidebar>
+        <Main>
+          <ListTodo />
+          <EditTodo />
+        </Main>
+      </GlobalContext>
     </div>
   );
 }

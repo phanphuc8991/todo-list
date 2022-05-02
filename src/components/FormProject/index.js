@@ -18,7 +18,11 @@ function FormProject({
 
   useEffect(() => {
     const checkCalendarItems = calendarItems.includes(selectedProject);
-    if (listProject.length === 0 || checkCalendarItems === true) {
+    if (
+      listProject.length === 0 ||
+      checkCalendarItems === true ||
+      titleModal === "New project!"
+    ) {
       setValueInput("");
     } else {
       setValueInput(selectedProject);

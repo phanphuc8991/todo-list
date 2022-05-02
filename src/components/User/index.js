@@ -1,12 +1,18 @@
+import { useState, useContext } from "react";
 import clsx from "clsx";
 import styles from "./User.module.scss";
 import logo from "../../images/logo.jpg";
 import { getAuth, signOut } from "firebase/auth";
-
+import { TodoContext } from "../GlobalContext";
+import { useListTodoFilter } from "../../hooks";
 function User() {
-  const auth = getAuth();
+  // CONTEXT
+
+  // CONTEXT
+  const { auth } = useContext(TodoContext);
+  const authData = getAuth();
   function handleSignOut() {
-    signOut(auth)
+    signOut(authData)
       .then(() => {})
       .catch((error) => {
         console.log("error", error);
@@ -18,7 +24,7 @@ function User() {
         <img src={logo} alt="logo" />
       </div>
       <div className={clsx(styles["user__info"])}>
-        <div>App TodoList</div>
+        <div>{auth.displayName}</div>
         <a href="#" onClick={handleSignOut}>
           Log Out{" "}
         </a>

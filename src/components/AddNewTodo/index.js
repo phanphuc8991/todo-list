@@ -32,7 +32,6 @@ function AddNewTodo() {
     const checkprojectNameExist = calendarItems.includes(projectName);
 
     if (desTodo && !checkprojectNameExist) {
-      console.log("auth", auth);
       const dataTodo = {
         text: desTodo,
         date: moment(inputDate).format("DD/MM/YYYY"),

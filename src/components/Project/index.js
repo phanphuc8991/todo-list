@@ -38,7 +38,7 @@ function Project({ project, colorEdit }) {
   const [showModal, setShowModal] = useState(false);
 
   // CONTEXT
-  const { setSelectedProject, selectedProjectDefault, calendarItem } =
+  const { setSelectedProject, selectedProjectDefault, calendarItem, auth } =
     useContext(TodoContext);
 
   // ANIMATED
@@ -59,7 +59,8 @@ function Project({ project, colorEdit }) {
       await deleteDoc(doc(db, "projects", project.id));
       const queryTodos = query(
         collection(db, "todos"),
-        where("projectName", "==", project.name)
+        where("projectName", "==", project.name),
+        where("userId", "==", auth.userId)
       );
       const querySnapshotTodos = await getDocs(queryTodos);
 

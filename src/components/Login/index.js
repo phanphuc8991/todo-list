@@ -18,39 +18,13 @@ const btnSubmit = {
 function Login() {
   async function handleLogin() {
     const auth = getAuth();
+
     const fbProvider = new GoogleAuthProvider();
     try {
       const dataUser = await signInWithPopup(auth, fbProvider);
     } catch (error) {
       console.log(error);
     }
-
-    // try {
-    //   const dataUser = await signInWithPopup(auth, fbProvider);
-    //   const { displayName, email, photoURL, uid } = dataUser.user;
-    //   const newUser = {
-    //     displayName,
-    //     email,
-    //     photoURL,
-    //     userId: uid,
-    //   };
-    //   const q = query(
-    //     collection(db, "users"),
-    //     where("userId", "==", newUser.userId)
-    //   );
-    //   const querySnapshot = await getDocs(q);
-    //   if (querySnapshot.docs.length === 0) {
-    //     const newUserFef = doc(collection(db, "users"));
-    //     await setDoc(newUserFef, {
-    //       ...newUser,
-    //       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    //     });
-    //   } else {
-    //     console.log("user da ton tai");
-    //   }
-    // } catch (error) {
-    //   console.log("error", error);
-    // }
   }
 
   return (

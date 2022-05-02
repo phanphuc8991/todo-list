@@ -57,11 +57,10 @@ function Todo({ todo }) {
   }
   function handleDeleteTodo(todo) {
     deleteTodo(todo);
-    console.log(selectedTodoEdit.createdAt.nanoseconds);
-    console.log(todo.createdAt.nanoseconds);
 
-    if (selectedTodoEdit.createdAt.nanoseconds === todo.createdAt.nanoseconds) {
-      console.log("bang nhau");
+    if (
+      selectedTodoEdit?.createdAt.nanoseconds === todo.createdAt?.nanoseconds
+    ) {
       setSelectedTodoEdit(undefined);
     }
   }

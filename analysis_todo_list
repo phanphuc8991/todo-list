@@ -1,29 +1,9 @@
--  Sidebar.
 
-  - User.
-  
-  - AddNewTodo.
-  
-  - Calendar.
-  
-  - Projects.
-    - Project.
-    - AddNewProject.
-    - RenameProject.
-  
-- Todos.
-  - Todo or Next7Days.
-  
-  - day (Todo).
-  
- get todayDate.
- get todoDate in todos
 
- put into todoDate.diff(todoDate,"days");
-
- Luc dang nhap vao: 
-
- Lay du lieu luu vao database.
-  - co userId 
-
-  userId gan Project.
+ 
+ 1 Lấy thông tin user từ  firebase.
+ 2 Kiểm tra user đó đã tồn tại chưa.
+  - Đã tồn tại thì lấy danh sách Todo và Project với userId đó.
+  - Chưa tồn tại thì lưa thông tin user đó xuống database và lấy danh sách Todo và Project với userId đó.
+ 
+  
